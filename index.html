@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fut Society – Wiki</title>
+  <meta name="description"
+    content="Página da wiki do grupo de futebol Fut Society, formado por alunos da UFG/INF em Goiânia." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Linux+Libertine+Display&family=Linux+Libertine:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --wiki-bg: #ffffff;
+      --wiki-surface: #f8f9fa;
+      --wiki-border: #a2a9b1;
+      --wiki-blue: #3366cc;
+      --wiki-blue-vis: #6b6bff;
+      --wiki-red: #cc3300;
+      --wiki-text: #202122;
+      --wiki-muted: #54595d;
+      --wiki-infohead: #cee0f2;
+      --wiki-inforow: #eaecf0;
+      --toc-bg: #f8f9fa;
+      --font-body: 'Linux Libertine', Georgia, 'Times New Roman', serif;
+      --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #eaecf0;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--wiki-text);
+      line-height: 1.6;
+    }
+
+    /* ─── Layout ───────────────────────────────────────────────── */
+    .page-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--wiki-bg);
+      padding: 0 1.5rem 3rem;
+    }
+
+    /* ─── Top Bar (fake Wikipedia chrome) ─────────────────────── */
+    .wiki-topbar {
+      background: #fff;
+      border-bottom: 1px solid var(--wiki-border);
+      padding: 0.4rem 0;
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--wiki-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 -1.5rem 0;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .wiki-topbar .logo {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--wiki-text);
+      letter-spacing: -0.5px;
+    }
+
+    .wiki-topbar .logo span {
+      color: var(--wiki-blue);
+    }
+
+    .wiki-topbar nav a {
+      color: var(--wiki-blue);
+      text-decoration: none;
+      margin-left: 0.75rem;
+    }
+
+    .wiki-topbar nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* ─── Page Title ───────────────────────────────────────────── */
+    .page-title {
+      border-bottom: 1px solid var(--wiki-border);
+      padding: 1.2rem 0 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .page-title h1 {
+      font-family: 'Linux Libertine Display', var(--font-body);
+      font-size: 2rem;
+      font-weight: normal;
+      color: var(--wiki-text);
+      line-height: 1.2;
+    }
+
+    .page-title .subtitle {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--wiki-muted);
+      margin-top: 0.15rem;
+    }
+
+    /* ─── Content grid ─────────────────────────────────────────── */
+    .content {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .main-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* ─── Infobox ──────────────────────────────────────────────── */
+    .infobox {
+      float: right;
+      clear: right;
+      margin: 0 0 1rem 1.5rem;
+      border: 1px solid var(--wiki-border);
+      background: var(--wiki-surface);
+      font-size: 0.85rem;
+      min-width: 220px;
+      max-width: 280px;
+      width: 100%;
+    }
+
+    .infobox-title {
+      background: var(--wiki-infohead);
+      text-align: center;
+      font-weight: bold;
+      padding: 0.45rem 0.6rem;
+      border-bottom: 1px solid var(--wiki-border);
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+    }
+
+    .infobox-logo {
+      text-align: center;
+      padding: 0.75rem 0.5rem;
+      border-bottom: 1px solid var(--wiki-border);
+    }
+
+    .infobox-logo img {
+      width: 100%;
+      max-width: 220px;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .infobox-caption {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      color: var(--wiki-muted);
+      margin-top: 0.4rem;
+      line-height: 1.3;
+    }
+
+    .logo-placeholder {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #1a5276, #2980b9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      text-align: center;
+      gap: 0.3rem;
+    }
+
+    .logo-placeholder .ball {
+      font-size: 2rem;
+    }
+
+    table.infobox-rows {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table.infobox-rows tr:nth-child(even) td {
+      background: var(--wiki-inforow);
+    }
+
+    table.infobox-rows td {
+      padding: 0.3rem 0.55rem;
+      vertical-align: top;
+      border-top: 1px solid var(--wiki-border);
+    }
+
+    table.infobox-rows td:first-child {
+      font-weight: bold;
+      white-space: nowrap;
+      width: 45%;
+    }
+
+    table.infobox-rows td.badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* ─── Table of Contents ────────────────────────────────────── */
+    .toc {
+      float: left;
+      clear: left;
+      background: var(--toc-bg);
+      border: 1px solid var(--wiki-border);
+      padding: 0.7rem 1rem;
+      margin: 0 1.5rem 1rem 0;
+      font-size: 0.875rem;
+      min-width: 200px;
+      max-width: 280px;
+    }
+
+    @media (max-width: 600px) {
+      .toc {
+        float: none;
+        max-width: 100%;
+        margin: 0 0 1rem;
+      }
+    }
+
+    .toc-title {
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 0.4rem;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+    }
+
+    .toc ol {
+      padding-left: 1.4rem;
+    }
+
+    .toc li {
+      margin: 0.15rem 0;
+    }
+
+    .toc ol ol {
+      margin-top: 0.1rem;
+      font-size: 0.82rem;
+    }
+
+    .toc a {
+      color: var(--wiki-blue);
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      text-decoration: underline;
+    }
+
+    .toc-toggle {
+      cursor: pointer;
+      color: var(--wiki-blue);
+      font-size: 0.78rem;
+      margin-left: 0.5rem;
+      font-family: var(--font-ui);
+    }
+
+    /* ─── Sections ─────────────────────────────────────────────── */
+    .section {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-header {
+      border-bottom: 1px solid var(--wiki-border);
+      margin-bottom: 0.65rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .section-header h2 {
+      font-family: 'Linux Libertine Display', var(--font-body);
+      font-size: 1.45rem;
+      font-weight: normal;
+      padding-bottom: 0.25rem;
+    }
+
+    .section-header h3 {
+      font-family: var(--font-body);
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding-bottom: 0.2rem;
+    }
+
+    .edit-link {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      color: var(--wiki-blue);
+      text-decoration: none;
+    }
+
+    .edit-link:hover {
+      text-decoration: underline;
+    }
+
+    p {
+      margin-bottom: 0.75rem;
+    }
+
+    /* ─── Links ────────────────────────────────────────────────── */
+    a {
+      color: var(--wiki-blue);
+    }
+
+    a:visited {
+      color: var(--wiki-blue-vis);
+    }
+
+    /* ─── Tables ───────────────────────────────────────────────── */
+    .wiki-table-wrap {
+      overflow-x: auto;
+      margin-bottom: 1rem;
+    }
+
+    .wiki-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      font-family: var(--font-ui);
+    }
+
+    .wiki-table caption {
+      caption-side: top;
+      text-align: left;
+      font-weight: bold;
+      padding: 0.4rem 0;
+      font-size: 0.95rem;
+      color: var(--wiki-text);
+    }
+
+    .wiki-table th {
+      background: var(--wiki-infohead);
+      border: 1px solid var(--wiki-border);
+      padding: 0.4rem 0.65rem;
+      text-align: left;
+    }
+
+    .wiki-table td {
+      border: 1px solid var(--wiki-border);
+      padding: 0.35rem 0.65rem;
+      vertical-align: middle;
+    }
+
+    .wiki-table tbody tr:nth-child(even) td {
+      background: #f8f9fa;
+    }
+
+    .wiki-table tbody tr:hover td {
+      background: #eaf3fb;
+    }
+
+    .rank {
+      font-weight: bold;
+      text-align: center;
+      width: 2.5rem;
+    }
+
+    .num {
+      text-align: center;
+    }
+
+    /* Medal colors */
+    .gold {
+      color: #b8860b;
+      font-weight: bold;
+    }
+
+    .silver {
+      color: #707070;
+      font-weight: bold;
+    }
+
+    .bronze {
+      color: #9c5c2b;
+      font-weight: bold;
+    }
+
+    /* Card badges */
+    .card {
+      display: inline-block;
+      width: 14px;
+      height: 20px;
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-right: 2px;
+    }
+
+    .card-yellow {
+      background: #f5c518;
+      border: 1px solid #d4a017;
+    }
+
+    .card-red {
+      background: #cc3300;
+      border: 1px solid #991f00;
+    }
+
+    /* ─── Player Cards Section ─────────────────────────────────── */
+    .player-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .player-card {
+      border: 1px solid var(--wiki-border);
+      background: var(--wiki-surface);
+      padding: 0.65rem 0.75rem;
+      font-size: 0.83rem;
+      font-family: var(--font-ui);
+    }
+
+    .player-card .pc-name {
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .player-card .pc-alias {
+      color: var(--wiki-muted);
+      font-style: italic;
+      font-size: 0.8rem;
+    }
+
+    .player-card .pc-pos {
+      display: inline-block;
+      margin-top: 0.3rem;
+      background: var(--wiki-infohead);
+      border: 1px solid var(--wiki-border);
+      border-radius: 2px;
+      padding: 0 0.35rem;
+      font-size: 0.72rem;
+    }
+
+    .player-card .pc-note {
+      margin-top: 0.35rem;
+      color: var(--wiki-muted);
+      font-size: 0.78rem;
+    }
+
+    /* ─── Trivia List ──────────────────────────────────────────── */
+    .trivia-list {
+      padding-left: 1.5rem;
+    }
+
+    .trivia-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    .trivia-list li.empty {
+      color: var(--wiki-muted);
+      font-style: italic;
+    }
+
+    /* ─── Rule Box ─────────────────────────────────────────────── */
+    .rule-box {
+      background: var(--wiki-surface);
+      border-left: 4px solid var(--wiki-infohead);
+      border: 1px solid var(--wiki-border);
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.875rem;
+      font-family: var(--font-ui);
+    }
+
+    .rule-box h4 {
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+      color: var(--wiki-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .rule-box ul {
+      padding-left: 1.25rem;
+    }
+
+    .rule-box ul li {
+      margin-bottom: 0.25rem;
+    }
+
+    /* ─── Champion Banner ──────────────────────────────────────── */
+    .champion-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .champion-cell {
+      flex: 1;
+      min-width: 130px;
+      border: 1px solid var(--wiki-border);
+      text-align: center;
+      padding: 0.5rem;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      background: var(--wiki-surface);
+    }
+
+    .champion-cell .month {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 0.78rem;
+      color: var(--wiki-muted);
+      text-transform: uppercase;
+    }
+
+    .champion-cell .winner {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .champion-cell .trophy {
+      font-size: 1.4rem;
+    }
+
+    .champion-cell.current {
+      background: #fefde7;
+      border-color: #d4a017;
+    }
+
+    /* ─── Footer ───────────────────────────────────────────────── */
+    .wiki-footer {
+      margin-top: 2rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--wiki-border);
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--wiki-muted);
+      text-align: center;
+    }
+
+    /* ─── Notices ──────────────────────────────────────────────── */
+    .notice {
+      border: 1px solid var(--wiki-border);
+      background: var(--wiki-surface);
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 1rem;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      color: var(--wiki-muted);
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+
+    .notice .icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    /* ─── Refs (superscript) ───────────────────────────────────── */
+    sup.ref {
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+    }
+
+    sup.ref a {
+      color: var(--wiki-blue);
+    }
+
+    /* ─── Responsive ───────────────────────────────────────────── */
+    @media (max-width: 700px) {
+      .infobox {
+        float: none;
+        max-width: 100%;
+        margin: 0 0 1rem;
+      }
+
+      .toc {
+        float: none;
+        max-width: 100%;
+        margin: 0 0 1rem;
+      }
+
+      .page-title h1 {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* ─── Print ─────────────────────────────────────────────────── */
+    @media print {
+      body {
+        background: white;
+      }
+
+      .wiki-topbar {
+        display: none;
+      }
+
+      .edit-link {
+        display: none;
+      }
+    }
+
+    /* ─── Collapsible Sections (details/summary) ──────────────── */
+    .collapsible-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .collapsible-section>summary {
+      list-style: none;
+      /* hide default triangle in Firefox */
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--wiki-border);
+      padding-bottom: 0.25rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .collapsible-section>summary::-webkit-details-marker {
+      display: none;
+      /* hide default triangle in Chrome/Safari */
+    }
+
+    .collapsible-section>summary .section-toggle {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      color: var(--wiki-blue);
+      margin-left: 0.5rem;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .collapsible-section>summary .summary-h2 {
+      font-family: 'Linux Libertine Display', var(--font-body);
+      font-size: 1.45rem;
+      font-weight: normal;
+      color: var(--wiki-text);
+      line-height: 1.2;
+    }
+
+    /* When section is open, show [recolher]; when closed, show [expandir] */
+    .collapsible-section[open]>summary .section-toggle::before {
+      content: '[recolher]';
+    }
+
+    .collapsible-section:not([open])>summary .section-toggle::before {
+      content: '[expandir]';
+    }
+
+    .collapsible-section .section-body {
+      overflow: hidden; /* targeted BFC — stops the TOC float from bleeding into section content */
+    }
+
+    /* ─── Craque do Mês Atual mini-infobox ──────────────────────── */
+    #infobox-craque-atual {
+      float: right;
+      clear: right;
+      margin: 0 0 1rem 1.5rem;
+      border: 1px solid var(--wiki-border);
+      background: var(--wiki-surface);
+      font-size: 0.85rem;
+      min-width: 220px;
+      max-width: 280px;
+      width: 100%;
+    }
+
+    .cdm-infobox-photo {
+      display: block;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 0;
+      margin: 0.5rem auto 0;
+      border: 1px solid var(--wiki-border);
+    }
+
+    .cdm-infobox-photo-placeholder {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-radius: 0;
+      border: 1px solid var(--wiki-border);
+      background: linear-gradient(135deg, #1a5276, #2980b9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin: 0.5rem auto 0;
+    }
+
+    .cdm-infobox-winner-name {
+      text-align: center;
+      font-weight: bold;
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      padding: 0 0.6rem 0.2rem;
+    }
+
+    .cdm-infobox-stats {
+      text-align: center;
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--wiki-muted);
+      padding-bottom: 0.5rem;
+    }
+
+    .cdm-infobox-divider {
+      border: none;
+      border-top: 1px solid var(--wiki-border);
+      margin: 0;
+    }
+
+    .cdm-infobox-runners {
+      padding: 0.35rem 0.6rem 0.4rem;
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+    }
+
+    .cdm-infobox-runners p {
+      margin: 0.1rem 0;
+    }
+
+    /* ─── Callout Cards ─────────────────────────────────────────── */
+    .callout-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.6rem;
+      margin: 1rem 0 1.2rem;
+    }
+
+    .callout-card {
+      border: 1px solid var(--wiki-border);
+      background: var(--wiki-surface);
+      padding: 0.65rem 0.75rem;
+      font-family: var(--font-ui);
+      text-align: center;
+    }
+
+    .callout-label {
+      font-size: 0.72rem;
+      color: var(--wiki-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+
+    .callout-value {
+      font-size: 1rem;
+      font-weight: bold;
+      color: var(--wiki-text);
+      line-height: 1.2;
+    }
+
+    .callout-sub {
+      font-size: 0.75rem;
+      color: var(--wiki-muted);
+      margin-top: 0.2rem;
+    }
+
+    .callout-danger .callout-value {
+      color: var(--wiki-red);
+    }
+
+    code {
+      background: var(--wiki-inforow);
+      border: 1px solid var(--wiki-border);
+      border-radius: 2px;
+      padding: 0 0.3em;
+      font-size: 0.85em;
+      font-family: 'Courier New', monospace;
+    }
+    /* ─── All-Time Stats table ─────────────────────────────────────── */
+    .at-icon-cell {
+      text-align: center;
+      width: 2.8rem;
+      padding: 0.15rem 0.3rem;
+    }
+
+    .at-icon {
+      width: 36px;
+      height: 48px; /* 3:4 portrait */
+      object-fit: cover;
+      border: 1px solid var(--wiki-border);
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    .at-icon-fb {
+      display: inline-flex;
+      width: 36px;
+      height: 48px; /* 3:4 portrait */
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-ui);
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: #fff;
+      vertical-align: middle;
+      border: 1px solid rgba(0,0,0,.12);
+    }
+
+    .at-name {
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* Highlight the active sort column header */
+    .at-sort-active {
+      background: #dce9f8 !important;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════ TOP BAR ══════════════════════ -->
+  <div class="wiki-topbar">
+    <span class="logo">⚽ <span>Fut</span>Wiki</span>
+    <nav>
+      <a href="#">Artigo</a>
+      <a href="#">Discussão</a>
+      <a href="#">Histórico</a>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════════════ WRAPPER ══════════════════════ -->
+  <div class="page-wrapper">
+
+    <!-- PAGE TITLE -->
+    <div class="page-title">
+      <h1>Fut Society (grupo)</h1>
+      <p class="subtitle">Da FutWiki, a enciclopédia livre do futebol da UFG</p>
+    </div>
+
+    <!-- NOTICE -->
+    <div class="notice">
+      <span class="icon">📝</span>
+      <span>Este artigo está em desenvolvimento ativo. Algumas seções podem conter dados incompletos ou marcadores de
+        posição enquanto aguardam informações adicionais.</span>
+    </div>
+
+    <!-- ══════════════════════ INFOBOX (floated right) ══════════════ -->
+    <div class="infobox">
+
+      <div class="infobox-title">Fut Society</div>
+      <div class="infobox-logo">
+        <img src="assets/logo/logo.jpeg" alt="Escudo do Fut Society">
+        <div class="infobox-caption">Logotipo oficial do grupo</div>
+      </div>
+
+      <table class="infobox-rows">
+        <tr>
+          <td>Nome oficial</td>
+          <td>Society</td>
+        </tr>
+        <tr>
+          <td>Fundado</td>
+          <td>Abril de 2025</td>
+        </tr>
+        <tr>
+          <td>Sede</td>
+          <td>Goiânia, GO<br><em>Ginásio da FEF &amp; Campo Farofa</em></td>
+        </tr>
+        <tr>
+          <td>Modalidade</td>
+          <td>Futsal / Society</td>
+        </tr>
+        <tr>
+          <td>Afiliação</td>
+          <td>UFG – Instituto de Informática (INF)</td>
+        </tr>
+        <tr>
+          <td>Frequência</td>
+          <td>Sábados (manhã)</td>
+        </tr>
+        <tr>
+          <td>📱 App</td>
+          <td>Fut Society App<br><small>por R. Batista &amp; E. Marinho</small></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ══════════════════════ CRAQUE DO MÊS ATUAL INFOBOX ═════════ -->
+    <!-- Populated dynamically by craque_do_mes.js -->
+    <div id="infobox-craque-atual" style="display:none;">
+      <div class="infobox-title">🏆 Craque do Mês Atual</div>
+      <div id="cdm-infobox-month-title" style="
+        text-align:center; font-family:var(--font-ui); font-size:0.75rem;
+        color:var(--wiki-muted); padding:0.3rem 0.6rem 0; font-style:italic;
+      ">—</div>
+
+      <!-- Winner photo (player icon from JSON) -->
+      <div id="cdm-infobox-photo-wrap" style="text-align:center;padding:0.2rem 0;"></div>
+
+      <!-- Winner name -->
+      <div class="cdm-infobox-winner-name" id="cdm-infobox-winner-name">—</div>
+
+      <!-- Stats line -->
+      <div class="cdm-infobox-stats" id="cdm-infobox-stats">—</div>
+
+      <hr class="cdm-infobox-divider">
+
+      <!-- Runners up -->
+      <div class="cdm-infobox-runners" id="cdm-infobox-runners"></div>
+    </div>
+
+    <!-- ══════════════════════ TABLE OF CONTENTS ════════════════════ -->
+    <div class="toc" id="toc">
+      <div class="toc-title">
+        Conteúdo
+        <span class="toc-toggle" id="toc-toggle" onclick="toggleToc()">[ocultar]</span>
+      </div>
+      <div id="toc-body">
+        <ol>
+          <li><a href="#introducao">Introdução</a></li>
+          <li><a href="#historia">História e Origens</a>
+            <ol>
+              <li><a href="#hist-fundacao">Fundação</a></li>
+              <li><a href="#hist-craque">O Prêmio Craque do Mês</a></li>
+              <li><a href="#hist-app">O Aplicativo</a></li>
+            </ol>
+          </li>
+          <li><a href="#formato">Formato e Regras</a></li>
+          <li><a href="#jogadores">Jogadores Notáveis</a></li>
+          <li><a href="#estatisticas">Estatísticas e Recordes</a>
+            <ol>
+              <li><a href="#stat-gols">Artilheiros</a></li>
+              <li><a href="#stat-assist">Assistências</a></li>
+              <li><a href="#stat-cartoes">Disciplina</a></li>
+              <li><a href="#stat-contra">Gols Contra</a></li>
+            </ol>
+          </li>
+          <li><a href="#campeons">Hall dos Craques do Mês</a></li>
+          <li><a href="#alltime-stats">Estatísticas Gerais dos Jogadores</a></li>
+          <li><a href="#trivia">Trivia &amp; Lore</a></li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- ══════════════════════ MAIN TEXT ════════════════════════════ -->
+    <div class="main-text">
+
+      <!-- §1 INTRODUÇÃO -->
+      <section class="section" id="introducao">
+        <div class="section-header">
+          <h2>Introdução</h2>
+          <a class="edit-link" href="#">[editar]</a>
+        </div>
+        <p>
+          O <strong>Society</strong> (informalmente chamado de <em>Fut Society</em> ou simplesmente <em>o
+            fut</em>) é um coletivo informal de futebol fundado em <strong>abril de 2025</strong>, composto
+          predominantemente por estudantes do <a href="#">Instituto de Informática (INF)</a> da <a href="#">Universidade
+            Federal de Goiás (UFG)</a>, em Goiânia. O grupo reúne-se regularmente aos <strong>sábados pela
+            manhã</strong> no <a href="#">Ginásio da Faculdade de Educação Física (FEF)</a> e, ocasionalmente, no
+          <strong>Campo Farofa</strong>, para partidas de futsal e society.
+        </p>
+        <p>
+          O que começou como uma iniciativa despretensiosa de organizar peladas entre colegas tornou-se, ao longo dos
+          meses, uma tradição semanal com regras próprias, sistema de pontuação digital, premiação mensal e rivalidades
+          amistosas. O grupo é notório tanto pelo nível crescente de competitividade técnica quanto pelo espírito
+          descontraído e camaradagem entre seus membros.
+        </p>
+      </section>
+
+      <!-- §2 HISTÓRIA -->
+      <section class="section" id="historia">
+        <div class="section-header">
+          <h2>História e Origens</h2>
+          <a class="edit-link" href="#">[editar]</a>
+        </div>
+
+        <div class="section-header" id="hist-fundacao" style="border-bottom:none; margin-top:.5rem;">
+          <h3>Fundação</h3>
+        </div>
+        <p>
+          O Fut Society foi idealizado e criado por <strong>Igor Pache</strong> e <strong>Lucas Dalla</strong> em
+          <strong>abril de 2025</strong>, com o propósito inicial de facilitar a organização de partidas de futebol
+          entre alunos da UFG, com foco nos estudantes do INF. Apesar de sua criação ter ocorrido no primeiro semestre
+          de 2025, o grupo só começou a ganhar tração significativa ao largo do segundo semestre, quando a frequência
+          das partidas aumentou consideravelmente.
+        </p>
+        <p>
+          O ponto de inflexão logístico foi a descoberta de que era possível <strong>reservar gratuitamente o Ginásio da
+            FEF</strong>. A partir desse momento, as peladas passaram a ocorrer de forma praticamente ininterrupta toda
+          semana, sempre aos sábados pela manhã, consolidando o costume que perdura até os dias atuais.
+        </p>
+
+        <div class="section-header" id="hist-craque" style="border-bottom:none; margin-top:.5rem;">
+          <h3>O Prêmio Craque do Mês</h3>
+        </div>
+        <p>
+          Uma das mudanças mais marcantes na cultura do grupo foi a decisão coletiva de começar a <strong>registrar os
+            gols marcados</strong> em cada partida e premiar o destaque do jogo — o chamado <em>Craque do Jogo</em>.
+          Esse prêmio foi criado pelo designer <strong>Matheus Marques</strong>, cuja contribuição visual ajudou a dar
+          identidade ao grupo.
+        </p>
+        <p>
+          Inicialmente, o registro era feito de maneira rudimentar: apenas os nomes dos marcadores eram anotados. Com o
+          tempo, a ideia amadureceu e os estudantes <strong>Rafael Batista</strong> e <strong>Enzo Marinho</strong>
+          decidiram desenvolver um aplicativo dedicado para gerenciar essas estatísticas — projeto que se tornaria peça
+          central da identidade do grupo.
+        </p>
+
+        <div class="section-header" id="hist-app" style="border-bottom:none; margin-top:.5rem;">
+          <h3>O Aplicativo</h3>
+        </div>
+        <p>
+          O <strong>Fut Society App</strong>, desenvolvido por Rafael Batista e Enzo Marinho, trouxe para o ambiente
+          digital funcionalidades como sorteio de times, registro de gols, assistências, gols contra e cartões. O
+          sucesso da ferramenta elevou ainda mais o nível de competitividade: a cada sábado, ao término das partidas,
+          era publicada uma tabela de artilheiros online.
+        </p>
+        <p>
+          Ao final de cada mês, o jogador com mais gols e assistências era coroado <strong>Craque do Mês</strong>,
+          recebendo um troféu físico e tendo sua foto estampada no grupo de mensagens durante todo o mês subsequente.
+          Como bônus adicional, o campeão ganhava o direito — e a obrigação no sentido mais festivo — de <strong>pagar a
+            coca para os parceiros no almoço do Restaurante Universitário</strong>.
+        </p>
+      </section>
+
+      <!-- §3 REGRAS -->
+      <details class="collapsible-section section" id="formato" open>
+        <summary>
+          <span class="summary-h2">Formato e Regras</span>
+          <span class="section-toggle"></span>
+        </summary>
+        <div class="section-body">
+          <p>As regras sofreram alterações ao longo do tempo. As vigentes atualmente são:</p>
+
+          <div class="rule-box">
+            <h4>⚽ Composição das Equipes</h4>
+            <ul>
+              <li>Em <strong>Futsal</strong>: 4 jogadores de linha por time.</li>
+              <li>Em <strong>Society</strong>: 5 jogadores de linha por time.</li>
+              <li>Os <strong>goleiros</strong> são os jogadores que estão aguardando fora do jogo na vez.</li>
+              <li>Os times são sorteados aleatoriamente entre os <strong>8 (futsal) ou 10 (society) primeiros a
+                  chegar</strong>.</li>
+              <li>Os jogadores seguintes, em ordem de chegada, vão montando o time reserva das próximas partidas.</li>
+            </ul>
+          </div>
+
+          <div class="rule-box">
+            <h4>⏱️ Duração e Resultados</h4>
+            <ul>
+              <li>Cada partida tem duração de <strong>8 minutos</strong>.</li>
+              <li>Se um time marcar <strong>3 gols antes do tempo</strong> esgotado, é declarado vencedor e a partida
+                encerra imediatamente.</li>
+              <li>Se o <strong>mesmo time vencer 3 partidas consecutivas</strong>, ele é eliminado da sequência junto ao
+                time perdedor, dando lugar ao time reserva.</li>
+              <li>Partidas encerradas em <strong>empate</strong> resultam na saída dos dois times.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <!-- §4 JOGADORES -->
+      <details class="collapsible-section section" id="jogadores" open>
+        <summary>
+          <span class="summary-h2">Jogadores Notáveis</span>
+          <span class="section-toggle"></span>
+        </summary>
+        <div class="section-body">
+          <p>Abaixo estão listados os jogadores de maior destaque na história do grupo, seja por conquistas,
+            personalidade
+            ou contribuições fora de campo.</p>
+
+          <div class="player-grid">
+            <div class="player-card">
+              <div class="pc-name">Rafael Batista</div>
+              <div class="pc-alias">"El Craque"</div>
+              <div class="pc-pos">Co-desenvolvedor do App</div>
+              <div class="pc-note">Craque do Mês de Março (40 G+A). Responsável pelo app junto a Enzo.</div>
+            </div>
+            <div class="player-card">
+              <div class="pc-name">Gabriel Melo</div>
+              <div class="pc-alias">"Baseado"</div>
+              <div class="pc-pos">Atacante</div>
+              <div class="pc-note">Primeiro Craque do Mês da história do grupo. Título histórico inédito.</div>
+            </div>
+            <div class="player-card">
+              <div class="pc-name">Paulo Roberto</div>
+              <div class="pc-alias">—</div>
+              <div class="pc-pos">Meia/Atacante</div>
+              <div class="pc-note">Craque do Mês de Fevereiro. Primeiro campeão com gols e assistências contando.</div>
+            </div>
+            <div class="player-card">
+              <div class="pc-name">Rian</div>
+              <div class="pc-alias">—</div>
+              <div class="pc-pos">—</div>
+              <div class="pc-note">Detentor atual do título de Craque do Mês (Abril). Foto no grupo do WhatsApp.</div>
+            </div>
+            <div class="player-card">
+              <div class="pc-name">Enzo Marinho</div>
+              <div class="pc-alias">—</div>
+              <div class="pc-pos">Co-desenvolvedor do App</div>
+              <div class="pc-note">Co-criador do Fut Society App ao lado de Rafael Batista.</div>
+            </div>
+            <div class="player-card">
+              <div class="pc-name">Matheus Marques</div>
+              <div class="pc-alias">—</div>
+              <div class="pc-pos">Designer</div>
+              <div class="pc-note">Criou o prêmio visual "Craque do Jogo" e a identidade gráfica do grupo.</div>
+            </div>
+            <div class="player-card">
+              <div class="pc-name">Igor Pache</div>
+              <div class="pc-alias">—</div>
+              <div class="pc-pos">Fundador</div>
+              <div class="pc-note">Co-fundador do Fut Society em abril de 2025.</div>
+            </div>
+            <div class="player-card">
+              <div class="pc-name">Lucas Dalla</div>
+              <div class="pc-alias">—</div>
+              <div class="pc-pos">Fundador</div>
+              <div class="pc-note">Co-fundador do Fut Society em abril de 2025.</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- §5 ESTATÍSTICAS -->
+      <details class="collapsible-section section" id="estatisticas" open>
+        <summary>
+          <span class="summary-h2">Estatísticas e Recordes</span>
+          <span class="section-toggle"></span>
+        </summary>
+        <div class="section-body">
+          <!-- Loading / Error banners -->
+          <div id="stats-loading" class="notice">
+            <span class="icon">⏳</span>
+            <span>A carregar estatísticas do ficheiro <code>data.json</code>…</span>
+          </div>
+          <div id="stats-error" class="notice" style="display:none; border-color:#d33; background:#fef;">
+            <span class="icon">⚠️</span>
+            <span>Não foi possível carregar <code>data.json</code>: <em id="stats-error-msg"></em><br>
+              Abra a página a partir de um servidor local (ex: <code>python3 -m http.server</code>) para que o
+              <code>fetch()</code> funcione.</span>
+          </div>
+
+          <!-- ── CALLOUT CARDS ─────────────────────────── -->
+          <div class="callout-grid">
+            <div class="callout-card">
+              <div class="callout-label">⚡ Gol Mais Rápido</div>
+              <div class="callout-value" id="callout-fastest-goal-player">—</div>
+              <div class="callout-sub" id="callout-fastest-goal-time">—</div>
+            </div>
+            <div class="callout-card">
+              <div class="callout-label">⏱️ Duração Média</div>
+              <div class="callout-value" id="callout-avg-match-length">—</div>
+              <div class="callout-sub" id="callout-avg-matches-count">—</div>
+            </div>
+            <div class="callout-card callout-danger">
+              <div class="callout-label">🧊 Pé Frio</div>
+              <div class="callout-value" id="callout-pe-frio-name">—</div>
+              <div class="callout-sub" id="callout-pe-frio-rate">win rate</div>
+            </div>
+            <div class="callout-card">
+              <div class="callout-label">🕐 Horário Quente</div>
+              <div class="callout-value" id="callout-peak-time-label">—</div>
+              <div class="callout-sub" id="callout-peak-time-goals">—</div>
+            </div>
+            <div class="callout-card">
+              <div class="callout-label">🤝 Dupla Dinâmica</div>
+              <div class="callout-value" id="callout-duo-pair">—</div>
+              <div class="callout-sub" id="callout-duo-count">—</div>
+            </div>
+          </div>
+
+          <!-- ── 5.1 ARTILHEIROS ───────────────────────── -->
+          <h3 id="stat-gols" style="margin:1.2rem 0 .4rem; font-size:1rem;">🥅 Artilheiros</h3>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-gols">
+              <caption>Top 5 marcadores de gols — total histórico</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th>Jogador</th>
+                  <th class="num">Gols</th>
+                  <th class="num">Partidas</th>
+                  <th class="num">Média/Jogo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="5" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── 5.2 ASSISTÊNCIAS ──────────────────────── -->
+          <h3 id="stat-assist" style="margin:1.2rem 0 .4rem; font-size:1rem;">🎯 Garçons (Assistências)</h3>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-assist">
+              <caption>Top 5 assistentes — total histórico</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th>Jogador</th>
+                  <th class="num">Assist.</th>
+                  <th class="num">Partidas</th>
+                  <th class="num">Média/Jogo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="5" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── 5.3 POWER RANKING (G+A) ───────────────── -->
+          <h3 id="stat-power" style="margin:1.2rem 0 .4rem; font-size:1rem;">⚡ Power Ranking (G+A)</h3>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-power">
+              <caption>Contribuições totais para gols (gols + assistências)</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th>Jogador</th>
+                  <th class="num">Gols</th>
+                  <th class="num">Assist.</th>
+                  <th class="num">G+A</th>
+                  <th class="num">Partidas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="6" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── 5.4 DISCIPLINA ────────────────────────── -->
+          <h3 id="stat-cartoes" style="margin:1.2rem 0 .4rem; font-size:1rem;">🟨 Disciplina (Cartões)</h3>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-cartoes">
+              <caption>Histórico disciplinar — cartões acumulados</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th>Jogador</th>
+                  <th class="num"><span class="card card-yellow"></span> Amarelos</th>
+                  <th class="num"><span class="card card-red"></span> Vermelhos</th>
+                  <th class="num">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="5" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── 5.5 GOLS CONTRA ───────────────────────── -->
+          <h3 id="stat-contra" style="margin:1.2rem 0 .4rem; font-size:1rem;">😬 Friendly Fire — Gols Contra</h3>
+          <div class="notice" style="margin-bottom:.5rem;">
+            <span class="icon">😬</span>
+            <span>Esta tabela documenta as contribuições involuntárias ao placar adversário. Ser listado aqui é uma
+              honra duvidosa.</span>
+          </div>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-contra">
+              <caption>Quadro de Gols Contra</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th>Jogador</th>
+                  <th class="num">Gols Contra</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="3" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── 5.6 MÉDIA DE AVALIAÇÃO ────────────────── -->
+          <h3 id="stat-rating" style="margin:1.2rem 0 .4rem; font-size:1rem;">⭐ Média de Avaliação <small
+              style="font-weight:normal;font-size:.8em;color:var(--wiki-muted);">(mín. 3 partidas)</small></h3>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-rating">
+              <caption>Nota média recebida por partida (escala 0–10)</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th>Jogador</th>
+                  <th class="num">Média</th>
+                  <th class="num">Partidas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="4" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── 5.7 WIN RATE ──────────────────────────── -->
+          <h3 id="stat-winrate" style="margin:1.2rem 0 .4rem; font-size:1rem;">🏅 Taxa de Vitórias</h3>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-winrate">
+              <caption>Porcentagem de vitórias por jogador (mín. 3 partidas)</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th>Jogador</th>
+                  <th class="num">Win %</th>
+                  <th class="num">Vitórias</th>
+                  <th class="num">Partidas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="5" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── 5.8 IRON MAN ──────────────────────────── -->
+          <h3 id="stat-ironman" style="margin:1.2rem 0 .4rem; font-size:1rem;">🦾 Iron Man — Frequência</h3>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-ironman">
+              <caption>Jogadores com maior presença (sessões únicas)</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th>Jogador</th>
+                  <th class="num">Sessões</th>
+                  <th class="num">Partidas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="4" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── 5.9 DEADLY DUOS ───────────────────────── -->
+          <h3 id="stat-duos" style="margin:1.2rem 0 .4rem; font-size:1rem;">🤝 Duplas Mortais</h3>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-duos">
+              <caption>Pares assistente → goleador mais frequentes</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th>Assistente</th>
+                  <th>Goleador</th>
+                  <th class="num">Gols em Parceria</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="4" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── 5.10 BLOWOUT KINGS ────────────────────── -->
+          <h3 id="stat-blowout" style="margin:1.2rem 0 .4rem; font-size:1rem;">💥 Blowout Kings (≥3 gols de diferença)
+          </h3>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-blowout">
+              <caption>Jogadores com mais vitórias em partidas de goleada</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th>Jogador</th>
+                  <th class="num">Goleadas</th>
+                  <th class="num">Partidas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="4" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── 5.11 CLUTCH ───────────────────────────── -->
+          <h3 id="stat-clutch" style="margin:1.2rem 0 .4rem; font-size:1rem;">🎯 Clutch Performers (gols após 6:00)</h3>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-clutch">
+              <caption>Gols marcados nos últimos 2 minutos de partida</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th>Jogador</th>
+                  <th class="num">Gols Clutch</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="3" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── 5.12 PEAK GOAL TIMES ──────────────────── -->
+          <h3 id="stat-peak-times" style="margin:1.2rem 0 .4rem; font-size:1rem;">📊 Horários de Pico dos Gols</h3>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-peak-times">
+              <caption>Intervalos de 2 minutos com maior densidade de gols</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th>Intervalo</th>
+                  <th class="num">Gols</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="3" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div><!-- /.section-body -->
+      </details>
+
+      <!-- § ESTATÍSTICAS GERAIS DOS JOGADORES — powered by all_time_stats.js -->
+      <details class="collapsible-section section" id="alltime-stats" open>
+        <summary>
+          <span class="summary-h2">Estatísticas Gerais dos Jogadores</span>
+          <span class="section-toggle"></span>
+        </summary>
+        <div class="section-body">
+          <p>Tabela completa com os totais acumulados de cada jogador ao longo de <strong>todas as sessões</strong>
+            registradas no <code>data.json</code>. Clique nos cabeçalhos para ordenar.</p>
+
+          <!-- Loading / error banner -->
+          <div id="alltime-stats-loading" class="notice">
+            <span class="icon">⏳</span>
+            <span>A calcular estatísticas gerais…</span>
+          </div>
+
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-alltime-stats">
+              <caption>Estatísticas Gerais — todos os jogadores (histórico completo)</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th class="at-icon-cell" style="cursor:default;">Foto</th>
+                  <th data-sort="sort-name">Jogador</th>
+                  <th class="num" data-sort="sort-matches">Partidas</th>
+                  <th class="num" data-sort="sort-goals">Gols</th>
+                  <th class="num" data-sort="sort-assists">Assists</th>
+                  <th class="num" data-sort="sort-ga">G+A ▼</th>
+                  <th class="num" data-sort="sort-yellow">
+                    <span class="card card-yellow" style="margin-right:2px;"></span>Amarelos
+                  </th>
+                  <th class="num" data-sort="sort-red">
+                    <span class="card card-red" style="margin-right:2px;"></span>Vermelhos
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="alltime-stats-body">
+                <tr>
+                  <td colspan="9" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div><!-- /.section-body -->
+      </details>
+
+      <!-- § HALL DOS CRAQUES DO MÊS — dynamic, powered by craque_do_mes.js -->
+      <details class="collapsible-section section" id="campeons" open>
+        <summary>
+          <span class="summary-h2">Hall dos Craques do Mês</span>
+          <span class="section-toggle"></span>
+        </summary>
+        <div class="section-body">
+          <p>
+            A cada mês, o jogador com mais <strong>Contribuições para Gols (G+A)</strong> é coroado
+            <em>Craque do Mês</em>. Em caso de empate em G+A, o critério de desempate é quem possui
+            mais gols marcados. Os dados abaixo são calculados automaticamente a partir de
+            <code>data.json</code>.
+          </p>
+
+          <!-- Loading banner -->
+          <div id="cdm-loading" class="notice">
+            <span class="icon">⏳</span>
+            <span>A calcular o Craque do Mês a partir de <code>data.json</code>…</span>
+          </div>
+
+          <!-- Dynamic container — craque_do_mes.js injects all content here -->
+          <div id="craque-do-mes-container"></div>
+        </div><!-- /.section-body -->
+      </details>
+
+      <!-- §7 TRIVIA -->
+      <details class="collapsible-section section" id="trivia" open>
+        <summary>
+          <span class="summary-h2">Trivia &amp; Lore</span>
+          <span class="section-toggle"></span>
+        </summary>
+        <div class="section-body">
+          <div class="notice">
+            <span class="icon">🚧</span>
+            <span>Esta seção está em construção. Contribua com histórias, momentos icônicos e polêmicas memoráveis do
+              grupo.</span>
+          </div>
+          <ul class="trivia-list">
+            <li class="empty">📌 <em>[Placeholder] — Adicione aqui incidentes notáveis, momentos engraçados e
+                controvérsias históricas do grupo.</em></li>
+            <li class="empty">📌 <em>[Placeholder] — Registre aqui rivalidades clássicas, sequências de vitórias e
+                marcas
+                históricas.</em></li>
+            <li class="empty">📌 <em>[Placeholder] — Documente regras que existiram e foram abolidas ao longo dos
+                meses.</em></li>
+          </ul>
+        </div><!-- /.section-body -->
+      </details>
+
+    </div><!-- /.main-text -->
+  </div><!-- /.page-wrapper -->
+
+  <!-- FOOTER -->
+  <div class="page-wrapper" style="padding-top:0;">
+    <div class="wiki-footer">
+      <p>Esta página foi editada pela última vez em <strong>27 de abril de 2026</strong>.
+        Conteúdo disponível sob <a href="#">FutWiki License</a>.</p>
+      <p style="margin-top:.3rem;">FutWiki · Instituto de Informática · UFG · Goiânia, GO</p>
+    </div>
+  </div>
+
+  <script>
+    /* ─── TOC Toggle ─────────────────────────────────────────── */
+    function toggleToc() {
+      const body = document.getElementById('toc-body');
+      const toggle = document.getElementById('toc-toggle');
+      if (body.style.display === 'none') {
+        body.style.display = '';
+        toggle.textContent = '[ocultar]';
+      } else {
+        body.style.display = 'none';
+        toggle.textContent = '[mostrar]';
+      }
+    }
+
+    /* ─── Active TOC link on scroll ─────────────────────────── */
+    const sections = document.querySelectorAll('section[id]');
+    const tocLinks = document.querySelectorAll('.toc a');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(link => {
+            link.style.fontWeight = '';
+            if (link.getAttribute('href') === '#' + entry.target.id) {
+              link.style.fontWeight = 'bold';
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-10% 0px -80% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+
+    /* ─── Table sort (click on <th> to sort) ─────────────────── */
+    document.querySelectorAll('.wiki-table').forEach(table => {
+      const headers = table.querySelectorAll('th');
+      headers.forEach((th, colIdx) => {
+        th.style.cursor = 'pointer';
+        th.title = 'Clique para ordenar';
+
+        let asc = true;
+        th.addEventListener('click', () => {
+          const tbody = table.querySelector('tbody');
+          const rows = Array.from(tbody.querySelectorAll('tr'));
+
+          rows.sort((a, b) => {
+            const cellA = a.cells[colIdx]?.textContent.trim() ?? '';
+            const cellB = b.cells[colIdx]?.textContent.trim() ?? '';
+            const numA = parseFloat(cellA.replace(/[^0-9.\-]/g, ''));
+            const numB = parseFloat(cellB.replace(/[^0-9.\-]/g, ''));
+            if (!isNaN(numA) && !isNaN(numB)) return asc ? numA - numB : numB - numA;
+            return asc ? cellA.localeCompare(cellB, 'pt') : cellB.localeCompare(cellA, 'pt');
+          });
+
+          rows.forEach(r => tbody.appendChild(r));
+
+          // Reset chevrons
+          headers.forEach(h => h.textContent = h.textContent.replace(/ [▲▼]$/, ''));
+          th.textContent += asc ? ' ▲' : ' ▼';
+          asc = !asc;
+        });
+      });
+    });
+  </script>
+
+  <!-- Stats engine: must load after the DOM tables are present -->
+  <script src="stats.js"></script>
+  <!-- All-Time Player Stats engine -->
+  <script src="all_time_stats.js"></script>
+  <!-- Craque do Mês engine -->
+  <script src="craque_do_mes.js"></script>
+</body>
+
+</html>
