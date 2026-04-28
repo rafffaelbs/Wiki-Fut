@@ -401,7 +401,7 @@ async function loadStats() {
   const errorEl = document.getElementById('stats-error');
 
   try {
-    const res = await fetch('data.json');
+    const res = await fetch('data.json', { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     const aggregated = aggregate(data);

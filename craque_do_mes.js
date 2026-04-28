@@ -726,7 +726,7 @@ function injectCraqueDoMes(data) {
  */
 async function loadCraqueDoMes() {
   try {
-    const res = await fetch('data.json');
+    const res = await fetch('data.json', { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     injectCraqueDoMes(data);

@@ -1,7 +1,7 @@
 {
   "group_id": "grupo_1773427387405",
   "group_name": "Fut do INF",
-  "export_date": "2026-04-27T14:38:00.450826",
+  "export_date": "2026-04-27T15:45:19.422507",
   "sessions_data": [
     {
       "id": "session_1777122060549",
@@ -414,29 +414,15 @@
           "match_id": "1777126996979",
           "date": "2026-04-25T11:23:16.979729",
           "match_duration": "08:22",
-          "scoreRed": 1,
-          "scoreWhite": 2,
+          "scoreRed": 0,
+          "scoreWhite": 1,
           "events": [
-            {
-              "type": "goal",
-              "player": "Darlei",
-              "assist": "Igor",
-              "team": "Vermelho",
-              "time": "05:12"
-            },
             {
               "type": "own_goal",
               "player": "Pedro Lukas",
               "assist": null,
               "team": "Branco",
               "time": "05:37"
-            },
-            {
-              "type": "own_goal",
-              "player": "Pedro Lukas",
-              "assist": null,
-              "team": "Vermelho",
-              "time": "07:58"
             },
             {
               "type": "goal",
