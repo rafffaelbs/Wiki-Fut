@@ -1,5 +1,5 @@
 /**
- * all_time_stats.js — Fut Society Wiki · Estatísticas Gerais dos Jogadores
+ * all_time_stats.js — Society™ Wiki · Estatísticas Gerais dos Jogadores
  *
  * Parses data.json → aggregates per-player totals across ALL sessions →
  * renders a sortable wiki-table into #alltime-stats-body.
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initAllTimeStats(data);
   } catch (err) {
     console.error('[AllTimeStats] Failed to load data.json:', err);
-    const tbody   = document.getElementById('alltime-stats-body');
+    const tbody = document.getElementById('alltime-stats-body');
     const loading = document.getElementById('alltime-stats-loading');
     if (loading) loading.style.display = 'none';
     if (tbody) {
@@ -63,7 +63,7 @@ function aggregatePlayers(data) {
 
       // ── Matches Played ──────────────────────────────────────
       const sides = [
-        ...(match.players?.red   ?? []),
+        ...(match.players?.red ?? []),
         ...(match.players?.white ?? []),
       ];
       for (const p of sides) {
@@ -102,13 +102,13 @@ function aggregatePlayers(data) {
 
 /** Map of data-sort attribute values → accessor functions */
 const SORT_FN = {
-  'sort-name':    p => p.name,
+  'sort-name': p => p.name,
   'sort-matches': p => p.matches,
-  'sort-goals':   p => p.goals,
+  'sort-goals': p => p.goals,
   'sort-assists': p => p.assists,
-  'sort-ga':      p => p.ga,
-  'sort-yellow':  p => p.yellowCards,
-  'sort-red':     p => p.redCards,
+  'sort-ga': p => p.ga,
+  'sort-yellow': p => p.yellowCards,
+  'sort-red': p => p.redCards,
 };
 
 function sortPlayers(players, key, asc) {
@@ -127,8 +127,8 @@ function sortPlayers(players, key, asc) {
 
 /** Deterministic colour for a player without an icon */
 const PALETTE = [
-  '#2980b9','#27ae60','#8e44ad','#e67e22','#c0392b',
-  '#16a085','#d35400','#2c3e50','#f39c12','#1abc9c',
+  '#2980b9', '#27ae60', '#8e44ad', '#e67e22', '#c0392b',
+  '#16a085', '#d35400', '#2c3e50', '#f39c12', '#1abc9c',
 ];
 
 function playerColour(name) {
@@ -138,7 +138,7 @@ function playerColour(name) {
 }
 
 function buildIconCell(player) {
-  const colour  = playerColour(player.name);
+  const colour = playerColour(player.name);
   const initial = player.name.charAt(0).toUpperCase();
 
   // No icon at all → always show coloured badge
@@ -198,8 +198,8 @@ function setIndicator(headers, activeKey, asc) {
 // ─── Init ──────────────────────────────────────────────────────────────────────
 
 function initAllTimeStats(data) {
-  const table   = document.getElementById('table-alltime-stats');
-  const tbody   = document.getElementById('alltime-stats-body');
+  const table = document.getElementById('table-alltime-stats');
+  const tbody = document.getElementById('alltime-stats-body');
   const loading = document.getElementById('alltime-stats-loading');
 
   if (!table || !tbody) return;
@@ -209,8 +209,8 @@ function initAllTimeStats(data) {
 
   // 2. Default sort: GA descending
   let currentKey = 'sort-ga';
-  let asc        = false;
-  let sorted     = sortPlayers(allPlayers, currentKey, asc);
+  let asc = false;
+  let sorted = sortPlayers(allPlayers, currentKey, asc);
 
   // 3. Initial render
   renderBody(sorted, tbody);

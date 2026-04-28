@@ -1,12 +1,12 @@
-# ⚽ FutWiki — Fut Society
+# ⚽ FutWiki — Society™
 
-> A Wikipedia-style static web page documenting the **Fut Society** football group, formed by students of the [Instituto de Informática (INF)](https://inf.ufg.br/) at UFG, Goiânia — powered entirely by a single `data.json` export from the App do Fut.
+> A Wikipedia-style static web page documenting the **Society™** football group, formed by students of the [Instituto de Informática (INF)](https://inf.ufg.br/) at UFG, Goiânia — powered entirely by a single `data.json` export from the App do Fut.
 
 ---
 
 ## 📖 About
 
-Fut Society is an informal futsal/society group that meets every Saturday at the FEF gym (UFG campus). This wiki documents the group's history, rules, players, standings, and monthly highlights in a clean Wikipedia-inspired layout.
+Society™ is an informal futsal/society group that meets every Saturday at the FEF gym (UFG campus). This wiki documents the group's history, rules, players, standings, and monthly highlights in a clean Wikipedia-inspired layout.
 
 All statistics on the page are **calculated dynamically at page load** — just update `data.json` and refresh.
 
@@ -137,7 +137,7 @@ Players without an entry get a default fallback message.
 | Styling | Vanilla CSS (CSS custom properties, `aspect-ratio`, `flow-root`) |
 | Logic | Vanilla JavaScript (ES2020+, `async/await`, `fetch`) |
 | Fonts | [Linux Libertine](https://fonts.google.com/) via Google Fonts |
-| Data | JSON (exported from the Fut Society Flutter app) |
+| Data | JSON (exported from the Society™ Flutter app) |
 
 No frameworks, no build step, no dependencies — just open and run.
 
@@ -150,12 +150,12 @@ No frameworks, no build step, no dependencies — just open and run.
 | **Rafael Batista** | Co-developer of the App do Fut & Wiki |
 | **Enzo Marinho** | Co-developer of the App do Fut |
 | **Matheus Marques** | Visual identity & "Craque do Jogo" prize design |
-| **Igor Pache** | Co-founder of Fut Society |
-| **Lucas Dalla** | Co-founder of Fut Society |
+| **Igor Pache** | Co-founder of Society™ |
+| **Lucas Dalla** | Co-founder of Society™ |
 
 ---
 
 ## 📄 License
 
-This project is for internal use by the Fut Society group.  
+This project is for internal use by the Society™ group.  
 *FutWiki · Instituto de Informática · UFG · Goiânia, GO*

@@ -1,5 +1,5 @@
 /**
- * stats.js — Fut Society Wiki Statistics Engine
+ * stats.js — Society™ Wiki Statistics Engine
  * Fetches data.json, aggregates all leaderboards, and injects results into the DOM.
  */
 
@@ -398,7 +398,7 @@ function injectStats({ players, duos, goalEvents, matchDurations, timeBuckets })
 
 async function loadStats() {
   const loadingEl = document.getElementById('stats-loading');
-  const errorEl   = document.getElementById('stats-error');
+  const errorEl = document.getElementById('stats-error');
 
   try {
     const res = await fetch('data.json');
@@ -408,9 +408,9 @@ async function loadStats() {
     injectStats(aggregated);
     if (loadingEl) loadingEl.style.display = 'none';
   } catch (err) {
-    console.error('Fut Society stats error:', err);
+    console.error('Society™ stats error:', err);
     if (loadingEl) loadingEl.style.display = 'none';
-    if (errorEl)   errorEl.style.display = 'flex';
+    if (errorEl) errorEl.style.display = 'flex';
     // Show a descriptive error so devs know what's wrong
     const errMsg = document.getElementById('stats-error-msg');
     if (errMsg) errMsg.textContent = err.message;

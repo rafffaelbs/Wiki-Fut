@@ -1,5 +1,5 @@
 /**
- * craque_do_mes.js — Fut Society Wiki · "Craque do Mês" Engine
+ * craque_do_mes.js — Society™ Wiki · "Craque do Mês" Engine
  *
  * Reads data.json → groups sessions by Month/Year → calculates top-3 GA
  * (Goals + Assists) per month → injects all HTML into #craque-do-mes-container.
@@ -36,7 +36,7 @@ const playerTrivia = {
     "Cria jogadas do nada e encontra espaços que ninguém mais enxerga."
   ],
   "Lucas Dalla": [
-    "Co-fundador do Fut Society. Lidera pelo exemplo — dentro e fora de campo.",
+    "Co-fundador do Society™. Lidera pelo exemplo — dentro e fora de campo.",
     "Sempre presente para completar o placar nos momentos certos."
   ],
   "Marcos dos Anjos": [
