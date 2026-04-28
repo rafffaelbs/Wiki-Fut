@@ -628,11 +628,10 @@
 
     .collapsible-section>summary {
       list-style: none;
-      /* hide default triangle in Firefox */
       cursor: pointer;
       display: flex;
-      justify-content: space-between;
-      align-items: baseline;
+      align-items: center;
+      gap: 0.45rem;
       border-bottom: 1px solid var(--wiki-border);
       padding-bottom: 0.25rem;
       margin-bottom: 0.65rem;
@@ -640,16 +639,20 @@
 
     .collapsible-section>summary::-webkit-details-marker {
       display: none;
-      /* hide default triangle in Chrome/Safari */
     }
 
-    .collapsible-section>summary .section-toggle {
-      font-family: var(--font-ui);
-      font-size: 0.75rem;
-      color: var(--wiki-blue);
-      margin-left: 0.5rem;
+    /* ❯ chevron rotates to point down when open */
+    .collapsible-section>summary::before {
+      content: '\276F'; /* ❯ */
+      font-size: 0.7rem;
+      color: var(--wiki-text);
       flex-shrink: 0;
-      user-select: none;
+      transition: transform 0.18s ease;
+      display: inline-block;
+      line-height: 1;
+    }
+    .collapsible-section[open]>summary::before {
+      transform: rotate(90deg);
     }
 
     .collapsible-section>summary .summary-h2 {
@@ -658,19 +661,25 @@
       font-weight: normal;
       color: var(--wiki-text);
       line-height: 1.2;
+      flex: 1;
     }
 
-    /* When section is open, show [recolher]; when closed, show [expandir] */
-    .collapsible-section[open]>summary .section-toggle::before {
-      content: '[recolher]';
+    /* Keep [recolher]/[expandir] text but push it to the far right */
+    .collapsible-section>summary .section-toggle {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      color: var(--wiki-blue);
+      flex-shrink: 0;
+      user-select: none;
+      margin-left: auto;
     }
 
-    .collapsible-section:not([open])>summary .section-toggle::before {
-      content: '[expandir]';
-    }
+    .collapsible-section[open]>summary .section-toggle::before { content: '[recolher]'; }
+    .collapsible-section:not([open])>summary .section-toggle::before { content: '[expandir]'; }
 
     .collapsible-section .section-body {
-      overflow: hidden; /* targeted BFC — stops the TOC float from bleeding into section content */
+      overflow: hidden;
+      /* targeted BFC — stops the TOC float from bleeding into section content */
     }
 
     /* ─── Craque do Mês Atual mini-infobox ──────────────────────── */
@@ -790,6 +799,7 @@
       font-size: 0.85em;
       font-family: 'Courier New', monospace;
     }
+
     /* ─── All-Time Stats table ─────────────────────────────────────── */
     .at-icon-cell {
       text-align: center;
@@ -799,7 +809,8 @@
 
     .at-icon {
       width: 36px;
-      height: 48px; /* 3:4 portrait */
+      height: 48px;
+      /* 3:4 portrait */
       object-fit: cover;
       border: 1px solid var(--wiki-border);
       vertical-align: middle;
@@ -809,7 +820,8 @@
     .at-icon-fb {
       display: inline-flex;
       width: 36px;
-      height: 48px; /* 3:4 portrait */
+      height: 48px;
+      /* 3:4 portrait */
       align-items: center;
       justify-content: center;
       font-family: var(--font-ui);
@@ -817,7 +829,7 @@
       font-weight: bold;
       color: #fff;
       vertical-align: middle;
-      border: 1px solid rgba(0,0,0,.12);
+      border: 1px solid rgba(0, 0, 0, .12);
     }
 
     .at-name {
@@ -829,7 +841,6 @@
     .at-sort-active {
       background: #dce9f8 !important;
     }
-
   </style>
 </head>
 
@@ -897,7 +908,7 @@
         </tr>
         <tr>
           <td>📱 App</td>
-          <td>Fut Society App<br><small>por R. Batista &amp; E. Marinho</small></td>
+          <td>App do Fut<br><small>por R. Batista &amp; E. Marinho</small></td>
         </tr>
       </table>
     </div>
@@ -1027,7 +1038,7 @@
           <h3>O Aplicativo</h3>
         </div>
         <p>
-          O <strong>Fut Society App</strong>, desenvolvido por Rafael Batista e Enzo Marinho, trouxe para o ambiente
+          O <strong>App do Fut</strong>, desenvolvido por Rafael Batista e Enzo Marinho, trouxe para o ambiente
           digital funcionalidades como sorteio de times, registro de gols, assistências, gols contra e cartões. O
           sucesso da ferramenta elevou ainda mais o nível de competitividade: a cada sábado, ao término das partidas,
           era publicada uma tabela de artilheiros online.
@@ -1115,7 +1126,7 @@
               <div class="pc-name">Enzo Marinho</div>
               <div class="pc-alias">—</div>
               <div class="pc-pos">Co-desenvolvedor do App</div>
-              <div class="pc-note">Co-criador do Fut Society App ao lado de Rafael Batista.</div>
+              <div class="pc-note">Co-criador do App do Fut ao lado de Rafael Batista.</div>
             </div>
             <div class="player-card">
               <div class="pc-name">Matheus Marques</div>
@@ -1498,7 +1509,7 @@
         </div><!-- /.section-body -->
       </details>
 
-      <!-- § HALL DOS CRAQUES DO MÊS — dynamic, powered by craque_do_mes.js -->
+      <!-- § HALL DOS CRAQUES DO MÊS — hardcoded -->
       <details class="collapsible-section section" id="campeons" open>
         <summary>
           <span class="summary-h2">Hall dos Craques do Mês</span>
@@ -1508,18 +1519,201 @@
           <p>
             A cada mês, o jogador com mais <strong>Contribuições para Gols (G+A)</strong> é coroado
             <em>Craque do Mês</em>. Em caso de empate em G+A, o critério de desempate é quem possui
-            mais gols marcados. Os dados abaixo são calculados automaticamente a partir de
-            <code>data.json</code>.
+            mais gols marcados.
           </p>
 
-          <!-- Loading banner -->
-          <div id="cdm-loading" class="notice">
-            <span class="icon">⏳</span>
-            <span>A calcular o Craque do Mês a partir de <code>data.json</code>…</span>
+          <!-- ── Janeiro 2026 ────────────────────────────────── -->
+          <div class="cdm-month-block" id="craque-01-2026">
+            <div class="section-header" style="border-bottom:none; margin-top:.8rem;">
+              <h3>Janeiro 2026</h3>
+            </div>
+            <div class="cdm-winner-card">
+              <div class="cdm-winner-photo-wrap">
+                <img class="cdm-winner-photo" src="assets/craques_do_mes/01_2026.jpeg"
+                  alt="Craque do Mês de Janeiro 2026"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="cdm-photo-placeholder" style="display:none;">🏆<span>Basiado</span></div>
+              </div>
+              <div class="cdm-winner-info">
+                <div class="cdm-winner-name">🏆 Basiado <span class="cdm-month-badge">Janeiro 2026</span></div>
+                <div class="cdm-winner-stats" style="font-style:italic; color:var(--wiki-muted);">Era Pré-Assistências — dados parciais</div>
+                <blockquote class="cdm-trivia">
+                  <span class="cdm-trivia-icon">💬</span>
+                  <em>O Pioneiro. O primeiro jogador a ser coroado campeão do título de Craque do Mês, cravando
+                    seu nome na história do campeonato durante a era jurássica em que as assistências ainda não
+                    eram contabilizadas pelos organizadores.</em>
+                </blockquote>
+                <p style="color:var(--wiki-muted); font-style:italic; font-size:.85rem; margin-top:.4rem;">
+                  📜 Dados do 2º e 3º lugar perdidos na história. Provavelmente ele ganhou roubado.
+                </p>
+              </div>
+            </div>
           </div>
 
-          <!-- Dynamic container — craque_do_mes.js injects all content here -->
-          <div id="craque-do-mes-container"></div>
+          <!-- ── Fevereiro 2026 ───────────────────────────────── -->
+          <div class="cdm-month-block" id="craque-02-2026">
+            <div class="section-header" style="border-bottom:none; margin-top:.8rem;">
+              <h3>Fevereiro 2026</h3>
+            </div>
+            <div class="cdm-winner-card">
+              <div class="cdm-winner-photo-wrap">
+                <img class="cdm-winner-photo" src="assets/craques_do_mes/02_2026.jpeg"
+                  alt="Craque do Mês de Fevereiro 2026"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="cdm-photo-placeholder" style="display:none;">🏆<span>Paulo</span></div>
+              </div>
+              <div class="cdm-winner-info">
+                <div class="cdm-winner-name">🏆 Paulo <span class="cdm-month-badge">Fevereiro 2026</span></div>
+                <div class="cdm-winner-stats">24 Gols, 8 Assists <strong>(32 Total G+A)</strong></div>
+                <blockquote class="cdm-trivia">
+                  <span class="cdm-trivia-icon">💬</span>
+                  <em>Protagonista de um embate épico. Paulo terminou o mês rigorosamente empatado em
+                    participações diretas com Basiado, mas levou o caneco pelo critério de desempate: mais gols
+                    marcados. Entrou para a história como o primeiro campeão da era moderna, onde gols e
+                    assistências passaram a ser contabilizados juntos.</em>
+                </blockquote>
+                <div class="cdm-runners-up">
+                  <span class="cdm-runners-label">Restante do pódio:</span>
+                  <ul class="cdm-runners-list">
+                    <li><span class="silver">🥈 Basiado</span> — 21 Gols, 11 Assists (<strong>32 G+A</strong>) <em style="color:var(--wiki-muted);font-size:.8em;">(empate em G+A, 2º por menos gols)</em></li>
+                    <li><span class="bronze">🥉 Igor</span> — 18 Gols, 9 Assists (<strong>27 G+A</strong>)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Março 2026 ──────────────────────────────────── -->
+          <div class="cdm-month-block" id="craque-03-2026">
+            <div class="section-header" style="border-bottom:none; margin-top:.8rem;">
+              <h3>Março 2026</h3>
+            </div>
+            <div class="cdm-winner-card">
+              <div class="cdm-winner-photo-wrap">
+                <img class="cdm-winner-photo" src="assets/craques_do_mes/03_2026.jpeg"
+                  alt="Craque do Mês de Março 2026"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="cdm-photo-placeholder" style="display:none;">🏆<span>Rafael</span></div>
+              </div>
+              <div class="cdm-winner-info">
+                <div class="cdm-winner-name">🏆 Rafael El Craque <span class="cdm-month-badge">Março 2026</span></div>
+                <div class="cdm-winner-stats">15 Gols, 25 Assists <strong>(40 Total G+A)</strong></div>
+                <blockquote class="cdm-trivia">
+                  <span class="cdm-trivia-icon">💬</span>
+                  <em>Uma performance avassaladora e histórica. Atuando como um verdadeiro maestro no meio-campo,
+                    estabeleceu o recorde absoluto até o momento com o maior número de participações diretas (GA)
+                    já registrado em um único mês.</em>
+                </blockquote>
+                <div class="cdm-runners-up">
+                  <span class="cdm-runners-label">Restante do pódio:</span>
+                  <ul class="cdm-runners-list">
+                    <li><span class="silver">🥈 Kaique</span> — 13 Gols, 14 Assists (<strong>27 G+A</strong>)</li>
+                    <li><span class="bronze">🥉 Basiado</span> — 16 Gols, 9 Assists (<strong>25 G+A</strong>)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Abril 2026 ────────────────────────────────────── -->
+          <div class="cdm-month-block" id="craque-04-2026">
+            <div class="section-header" style="border-bottom:none; margin-top:.8rem;">
+              <h3>Abril 2026</h3>
+            </div>
+            <div class="cdm-winner-card">
+              <div class="cdm-winner-photo-wrap">
+                <img class="cdm-winner-photo" src="assets/craques_do_mes/04_2026.jpeg"
+                  alt="Craque do Mês de Abril 2026"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="cdm-photo-placeholder" style="display:none;">🏆<span>Rian</span></div>
+              </div>
+              <div class="cdm-winner-info">
+                <div class="cdm-winner-name">🏆 Rian <span class="cdm-month-badge">Abril 2026</span></div>
+                <div class="cdm-winner-stats">20 Gols, 13 Assists <strong>(33 Total G+A)</strong></div>
+                <blockquote class="cdm-trivia">
+                  <span class="cdm-trivia-icon">💬</span>
+                  <em>O atual detentor do título de Craque do Mês. Com uma performance letal e consistente no
+                    ataque, Rian garantiu a taça e o direito de ter sua foto reinando absoluta no ícone do grupo
+                    de WhatsApp da panela.</em>
+                </blockquote>
+                <div class="cdm-runners-up">
+                  <span class="cdm-runners-label">Restante do pódio:</span>
+                  <ul class="cdm-runners-list">
+                    <li><span class="silver">🥈 Enzo</span> — 21 Gols, 11 Assists (<strong>32 G+A</strong>)</li>
+                    <li><span class="bronze">🥉 Rafael El Craque</span> — 13 Gols, 15 Assists (<strong>28 G+A</strong>)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Tabela Resumo Mensal ───────────────────────────── -->
+          <div class="section-header" style="margin-top:1.5rem; border-bottom:1px solid var(--wiki-border);">
+            <h3 style="font-size:1.05rem; font-weight:bold; padding-bottom:0.2rem;">📋 Tabela Resumo Mensal</h3>
+          </div>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-monthly-summary">
+              <caption>Resumo Mensal — Top 3 Craques por Mês</caption>
+              <thead>
+                <tr>
+                  <th class="num">Ano</th>
+                  <th>Mês</th>
+                  <th>🥇 1º Lugar (G+A)</th>
+                  <th>🥈 2º Lugar (G+A)</th>
+                  <th>🥉 3º Lugar (G+A)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="num">2026</td><td>Janeiro</td>
+                  <td><span class="gold">🥇</span> Basiado (N/A)</td>
+                  <td>—</td><td>—</td>
+                </tr>
+                <tr>
+                  <td class="num">2026</td><td>Fevereiro</td>
+                  <td><span class="gold">🥇</span> Paulo (32)</td>
+                  <td><span class="silver">🥈</span> Basiado (32)</td>
+                  <td><span class="bronze">🥉</span> Igor (27)</td>
+                </tr>
+                <tr>
+                  <td class="num">2026</td><td>Março</td>
+                  <td><span class="gold">🥇</span> Rafael El Craque (40)</td>
+                  <td><span class="silver">🥈</span> Kaique (27)</td>
+                  <td><span class="bronze">🥉</span> Basiado (25)</td>
+                </tr>
+                <tr>
+                  <td class="num">2026</td><td>Abril</td>
+                  <td><span class="gold">🥇</span> Rian (33)</td>
+                  <td><span class="silver">🥈</span> Enzo (32)</td>
+                  <td><span class="bronze">🥉</span> Rafael El Craque (28)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── Hall da Fama — Títulos Acumulados ──────────────── -->
+          <div class="section-header" style="margin-top:1.5rem; border-bottom:1px solid var(--wiki-border);">
+            <h3 style="font-size:1.05rem; font-weight:bold; padding-bottom:0.2rem;">🏛️ Hall da Fama — Títulos Acumulados</h3>
+          </div>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-all-time-titles">
+              <caption>Hall da Fama — Títulos de Craque do Mês (Histórico)</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th>Jogador</th>
+                  <th class="num">Títulos 🏆</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="rank gold">1</td><td>Basiado</td><td class="num"><strong>1</strong></td></tr>
+                <tr><td class="rank silver">2</td><td>Paulo</td><td class="num"><strong>1</strong></td></tr>
+                <tr><td class="rank bronze">3</td><td>Rafael El Craque</td><td class="num"><strong>1</strong></td></tr>
+                <tr><td class="rank">4</td><td>Rian</td><td class="num"><strong>1</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
         </div><!-- /.section-body -->
       </details>
 

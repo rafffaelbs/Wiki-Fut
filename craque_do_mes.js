@@ -16,7 +16,7 @@
  */
 const playerTrivia = {
   "Rafael El Craque": [
-    "Desenvolvedor do Fut Society App e meia-organizador por excelência — quando não está no app, está distribuindo assistências.",
+    "Desenvolvedor do App do Fut e meia-organizador por excelência — quando não está no app, está distribuindo assistências.",
     "Co-criador do sistema de estatísticas junto a Enzo Marinho."
   ],
   "Rian": [
@@ -32,7 +32,7 @@ const playerTrivia = {
     "Conhecido pelo chute de longa distância que todo mundo viu mas ninguém esperava."
   ],
   "Enzo": [
-    "Co-desenvolvedor do Fut Society App. Em campo, distribui assistências com a mesma precisão com que escreve código.",
+    "Co-desenvolvedor do App do Fut. Em campo, distribui assistências com a mesma precisão com que escreve código.",
     "Cria jogadas do nada e encontra espaços que ninguém mais enxerga."
   ],
   "Lucas Dalla": [
@@ -627,12 +627,7 @@ function injectCurrentCraqueInfobox(data, rankedMonths) {
 // ─── Main Injection ────────────────────────────────────────────────────────────
 
 function injectCraqueDoMes(data) {
-  const container = document.getElementById('craque-do-mes-container');
-  if (!container) {
-    console.warn('[CraqueDoMes] Container #craque-do-mes-container not found.');
-    return;
-  }
-
+  // Always inject CSS and populate the sidebar infobox
   injectCraqueDoMesStyles();
 
   // 1. Group sessions by month and tally GA
@@ -650,10 +645,17 @@ function injectCraqueDoMes(data) {
   // 4. All-time titles count
   const allTimeTitles = countAllTimeTitles(rankedMonths);
 
-  // 5. Populate the sidebar "Craque do Mês Atual" infobox
+  // 5. Always populate the sidebar — works even when Hall is hardcoded
   injectCurrentCraqueInfobox(data, rankedMonths);
 
-  // 6. Build HTML
+  // 6. Dynamic Hall — skip if container is absent (hardcoded content in use)
+  const container = document.getElementById('craque-do-mes-container');
+  if (!container) {
+    console.info('[CraqueDoMes] Hall container not found — using hardcoded content.');
+    return;
+  }
+
+  // 7. Build HTML
   let html = '';
 
   // — Monthly subtopics

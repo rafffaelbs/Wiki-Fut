@@ -1,6 +1,6 @@
 # ⚽ FutWiki — Fut Society
 
-> A Wikipedia-style static web page documenting the **Fut Society** football group, formed by students of the [Instituto de Informática (INF)](https://inf.ufg.br/) at UFG, Goiânia — powered entirely by a single `data.json` export from the Fut Society App.
+> A Wikipedia-style static web page documenting the **Fut Society** football group, formed by students of the [Instituto de Informática (INF)](https://inf.ufg.br/) at UFG, Goiânia — powered entirely by a single `data.json` export from the App do Fut.
 
 ---
 
@@ -34,7 +34,7 @@ WikiFut/
 ├── stats.js                # Statistics engine (12 stat categories)
 ├── craque_do_mes.js        # Player of the Month engine + sidebar infobox
 ├── all_time_stats.js       # All-Time player stats table engine
-├── data.json               # Match data exported from the Fut Society App
+├── data.json               # Match data exported from the App do Fut
 ├── assets/
 │   ├── logo/               # Group logo (logo.jpeg)
 │   ├── players_icons/      # Player icon images (referenced in data.json)
@@ -65,7 +65,7 @@ npx serve .
 
 ## 🗃️ Data Format
 
-All match data lives in **`data.json`**, exported directly from the Fut Society App. The expected top-level structure is:
+All match data lives in **`data.json`**, exported directly from the App do Fut. The expected top-level structure is:
 
 ```json
 {
@@ -147,8 +147,8 @@ No frameworks, no build step, no dependencies — just open and run.
 
 | Name | Role |
 |---|---|
-| **Rafael Batista** | Co-developer of the Fut Society App & Wiki |
-| **Enzo Marinho** | Co-developer of the Fut Society App |
+| **Rafael Batista** | Co-developer of the App do Fut & Wiki |
+| **Enzo Marinho** | Co-developer of the App do Fut |
 | **Matheus Marques** | Visual identity & "Craque do Jogo" prize design |
 | **Igor Pache** | Co-founder of Fut Society |
 | **Lucas Dalla** | Co-founder of Fut Society |
