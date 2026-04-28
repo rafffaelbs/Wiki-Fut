@@ -1,4 +1,4 @@
-# ⚽ FutWiki — Society™
+# FutWiki — Society™
 
 > A Wikipedia-style static web page documenting the **Society™** football group, formed by students of the [Instituto de Informática (INF)](https://inf.ufg.br/) at UFG, Goiânia — powered entirely by a single `data.json` export from the App do Fut.
 
