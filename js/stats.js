@@ -51,9 +51,17 @@ function setText(id, val) {
  *   onMatch(match, sessionId)
  */
 function walkMatches(data, onMatch) {
-  for (const session of data.sessions_data ?? []) {
-    const sessionId = session.session_id ?? session.session_date ?? Math.random();
-    for (const match of session.history ?? []) {
+  for (const [key, value] of Object.entries(data)) {
+    if (!key.startsWith('match_history_')) continue;
+    let history = [];
+    try {
+      history = JSON.parse(value);
+    } catch (e) {
+      console.error('Failed to parse history for', key, e);
+      continue;
+    }
+    const sessionId = key.replace('match_history_', '');
+    for (const match of history) {
       onMatch(match, sessionId);
     }
   }
@@ -170,8 +178,9 @@ function aggregate(data) {
           const assister = getPlayer(ev.assist);
           if (assister) assister.assists++;
 
-          // Duo tracking
-          const duoKey = [ev.assist, ev.player].join(' → ');
+          // Duo tracking (bidirectional)
+          const duoArr = [ev.assist, ev.player].sort();
+          const duoKey = duoArr.join(' & ');
           duos[duoKey] = (duos[duoKey] ?? 0) + 1;
         }
 
@@ -192,17 +201,33 @@ function aggregate(data) {
         if (p) p.ownGoals++;
       }
 
-      if (ev.type === 'card') {
+      if (ev.type === 'yellow_card') {
         const p = getPlayer(ev.player);
-        if (!p) continue;
-        const colour = (ev.colour ?? ev.color ?? '').toLowerCase();
-        if (colour === 'yellow' || colour === 'amarelo') p.cards.yellow++;
-        else if (colour === 'red' || colour === 'vermelho') p.cards.red++;
-        else p.cards.yellow++; // default to yellow if unspecified
-        p.cards.total++;
+        if (p) {
+          p.cards.yellow++;
+          p.cards.total++;
+        }
+      }
+
+      if (ev.type === 'red_card') {
+        const p = getPlayer(ev.player);
+        if (p) {
+          p.cards.red++;
+          p.cards.total++;
+        }
       }
     }
   });
+
+  if (data.players_data) {
+    for (const pData of data.players_data) {
+      const p = getPlayer(pData.name);
+      if (p) {
+        p.precalcRating = pData.rating;
+        p.precalcTotalGames = pData.totalGames;
+      }
+    }
+  }
 
   return { players, duos, goalEvents, matchDurations, timeBuckets };
 }
@@ -249,20 +274,33 @@ function buildOwnGoals(players, n = 5) {
 
 function buildAvgRating(players, minMatches = 3, n = 10) {
   return Object.values(players)
-    .filter(p => p.ratingCount >= minMatches)
-    .map(p => ({ ...p, avgRating: p.ratingSum / p.ratingCount }))
-    .sort((a, b) => b.avgRating - a.avgRating)
+    .filter(p => p.precalcRating != null && p.precalcTotalGames >= minMatches)
+    .sort((a, b) => b.precalcRating - a.precalcRating)
     .slice(0, n)
-    .map(p => [p.name, p.avgRating.toFixed(1), p.ratingCount]);
+    .map(p => [p.name, p.precalcRating.toFixed(2), p.precalcTotalGames]);
 }
 
 function buildWinRate(players, n = 10) {
   return Object.values(players)
-    .filter(p => p.matchesPlayed >= 3)
+    .filter(p => p.matchesPlayed >= 10)
     .map(p => ({ ...p, winPct: (p.wins / p.matchesPlayed) * 100 }))
     .sort((a, b) => b.winPct - a.winPct)
     .slice(0, n)
     .map(p => [p.name, `${p.winPct.toFixed(1)}%`, p.wins, p.matchesPlayed]);
+}
+
+function buildAproveitamento(players, n = 10) {
+  return Object.values(players)
+    .filter(p => p.matchesPlayed >= 10)
+    .map(p => {
+      const pts = p.wins * 3 + p.draws * 1;
+      const poss = p.matchesPlayed * 3;
+      const aproveitamento = (pts / poss) * 100;
+      return { ...p, aproveitamento, pts };
+    })
+    .sort((a, b) => b.aproveitamento - a.aproveitamento || b.pts - a.pts)
+    .slice(0, n)
+    .map(p => [p.name, `${p.aproveitamento.toFixed(1)}%`, p.wins, p.draws, p.losses]);
 }
 
 function buildIronMan(players, n = 10) {
@@ -285,8 +323,8 @@ function buildDeadlyDuos(duos, n = 5) {
     .sort(([, a], [, b]) => b - a)
     .slice(0, n)
     .map(([pair, count], i) => {
-      const [provider, scorer] = pair.split(' → ');
-      return [provider, scorer, count];
+      const [player1, player2] = pair.split(' & ');
+      return [player1, player2, count];
     });
 }
 
@@ -332,6 +370,9 @@ function injectStats({ players, duos, goalEvents, matchDurations, timeBuckets })
   // ── Win Rate
   fillTable('table-winrate', buildWinRate(players));
 
+  // ── Aproveitamento
+  fillTable('table-aproveitamento', buildAproveitamento(players));
+
   // ── Iron Man (presença)
   fillTable('table-ironman', buildIronMan(players));
 
@@ -367,9 +408,9 @@ function injectStats({ players, duos, goalEvents, matchDurations, timeBuckets })
     setText('callout-avg-matches-count', `(${matchDurations.length} partidas)`);
   }
 
-  // Pé Frio (lowest win rate, min 3 games)
+  // Pé Frio (lowest win rate, min 10 games)
   const peFrioList = Object.values(players)
-    .filter(p => p.matchesPlayed >= 3)
+    .filter(p => p.matchesPlayed >= 10)
     .map(p => ({ ...p, winPct: p.wins / p.matchesPlayed }))
     .sort((a, b) => a.winPct - b.winPct);
   if (peFrioList.length > 0) {
@@ -389,7 +430,7 @@ function injectStats({ players, duos, goalEvents, matchDurations, timeBuckets })
   const topDuo = Object.entries(duos).sort(([, a], [, b]) => b - a)[0];
   if (topDuo) {
     const [pair, count] = topDuo;
-    setText('callout-duo-pair', pair.replace(' → ', ' ➜ '));
+    setText('callout-duo-pair', pair);
     setText('callout-duo-count', `${count} gols em parceria`);
   }
 }
@@ -401,9 +442,8 @@ async function loadStats() {
   const errorEl = document.getElementById('stats-error');
 
   try {
-    const res = await fetch('data.json', { cache: 'no-store' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
+    const { fetchFutData } = await import('./firebase_setup.js');
+    const data = await fetchFutData();
     const aggregated = aggregate(data);
     injectStats(aggregated);
     if (loadingEl) loadingEl.style.display = 'none';

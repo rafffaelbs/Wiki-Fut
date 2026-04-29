@@ -119,14 +119,14 @@
 
     /* ─── Content grid ─────────────────────────────────────────── */
     .content {
-      display: flex;
-      gap: 1.5rem;
-      align-items: flex-start;
+      display: block;
+      /* Standard float-based layout for best text wrapping */
+      position: relative;
     }
 
     .main-text {
-      flex: 1;
-      min-width: 0;
+      display: block;
+      width: 100%;
     }
 
     /* ─── Infobox ──────────────────────────────────────────────── */
@@ -228,10 +228,10 @@
       background: var(--toc-bg);
       border: 1px solid var(--wiki-border);
       padding: 0.7rem 1rem;
-      margin: 0 1.5rem 1rem 0;
+      margin: 0.5rem 1.5rem 1.2rem 0;
       font-size: 0.875rem;
-      min-width: 200px;
-      max-width: 280px;
+      min-width: 240px;
+      max-width: 320px;
     }
 
     @media (max-width: 600px) {
@@ -487,6 +487,7 @@
       margin-bottom: 0.75rem;
       font-size: 0.875rem;
       font-family: var(--font-ui);
+      clear: both;
     }
 
     .rule-box h4 {
@@ -944,41 +945,56 @@
       <div class="cdm-infobox-runners" id="cdm-infobox-runners"></div>
     </div>
 
-    <!-- ══════════════════════ TABLE OF CONTENTS ════════════════════ -->
-    <div class="toc" id="toc">
-      <div class="toc-title">
-        Conteúdo
-        <span class="toc-toggle" id="toc-toggle" onclick="toggleToc()">[ocultar]</span>
-      </div>
-      <div id="toc-body">
-        <ol>
-          <li><a href="#introducao">Introdução</a></li>
-          <li><a href="#historia">História e Origens</a>
-            <ol>
-              <li><a href="#hist-fundacao">Fundação</a></li>
-              <li><a href="#hist-craque">O Prêmio Craque do Mês</a></li>
-              <li><a href="#hist-app">O Aplicativo</a></li>
-            </ol>
-          </li>
-          <li><a href="#formato">Formato e Regras</a></li>
-          <li><a href="#jogadores">Jogadores Notáveis</a></li>
-          <li><a href="#estatisticas">Estatísticas e Recordes</a>
-            <ol>
-              <li><a href="#stat-gols">Artilheiros</a></li>
-              <li><a href="#stat-assist">Assistências</a></li>
-              <li><a href="#stat-cartoes">Disciplina</a></li>
-              <li><a href="#stat-contra">Gols Contra</a></li>
-            </ol>
-          </li>
-          <li><a href="#campeons">Hall dos Craques do Mês</a></li>
-          <li><a href="#alltime-stats">Estatísticas Gerais dos Jogadores</a></li>
-          <li><a href="#trivia">Trivia &amp; Lore</a></li>
-        </ol>
-      </div>
-    </div>
-
     <!-- ══════════════════════ MAIN TEXT ════════════════════════════ -->
     <div class="main-text">
+
+      <!-- ══════════════════════ LEFT SIDEBAR (TROPHY + TOC) ══════════════ -->
+      <div style="float: left; clear: left; width: 240px; margin: 0 1.5rem 1rem 0;">
+        <!-- Trophy -->
+        <div
+          style="padding: 6px; border: 1px solid var(--wiki-border); background-color: var(--wiki-bg-offset); text-align: center; margin-bottom: 1rem;">
+          <img src="assets/craques_do_mes/premio_craque_do_mes.jpeg" alt="Troféu Craque do Mês"
+            style="width: 100%; display: block; border: 1px solid var(--wiki-border);">
+          <div style="font-size: 0.85em; margin-top: 5px; color: var(--wiki-text); line-height: 1.3;">
+            Troféu do Craque do Mês.<br>
+            <span style="font-size: 0.9em; color: var(--wiki-muted);">Design por Matheus Marques</span>
+          </div>
+        </div>
+
+        <!-- TOC -->
+        <div class="toc" id="toc" style="float: none; margin: 0; width: 100%; max-width: none; min-width: 0;">
+          <div class="toc-title">
+            Conteúdo
+            <span class="toc-toggle" id="toc-toggle" onclick="toggleToc()">[ocultar]</span>
+          </div>
+          <div id="toc-body">
+            <ol>
+              <li><a href="#introducao">Introdução</a></li>
+              <li><a href="#historia">História e Origens</a>
+                <ol>
+                  <li><a href="#hist-fundacao">Fundação</a></li>
+                  <li><a href="#hist-craque">O Prêmio Craque do Mês</a></li>
+                  <li><a href="#hist-app">O Aplicativo</a></li>
+                </ol>
+              </li>
+              <li><a href="#formato">Formato e Regras</a></li>
+              <li><a href="#jogadores">Jogadores Notáveis</a></li>
+              <li><a href="#estatisticas">Estatísticas e Recordes</a>
+                <ol>
+                  <li><a href="#stat-gols">Artilheiros</a></li>
+                  <li><a href="#stat-assist">Assistências</a></li>
+                  <li><a href="#stat-cartoes">Disciplina</a></li>
+                  <li><a href="#stat-contra">Gols Contra</a></li>
+                </ol>
+              </li>
+              <li><a href="#campeons">Hall dos Craques do Mês</a></li>
+              <li><a href="#alltime-stats">Estatísticas Gerais dos Jogadores</a></li>
+              <li><a href="#trivia">Trivia &amp; Lore</a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
 
       <!-- §1 INTRODUÇÃO -->
       <section class="section" id="introducao">
@@ -1044,6 +1060,7 @@
         <div class="section-header" id="hist-app" style="border-bottom:none; margin-top:.5rem;">
           <h3>O Aplicativo</h3>
         </div>
+
         <p>
           O <strong>App do Fut</strong>, desenvolvido por Rafael Batista e Enzo Marinho, trouxe para o ambiente
           digital funcionalidades como sorteio de times, registro de gols, assistências, gols contra e cartões. O
@@ -1113,13 +1130,13 @@
             </div>
             <div class="player-card">
               <div class="pc-name">Gabriel Melo</div>
-              <div class="pc-alias">"Baseado"</div>
+              <div class="pc-alias">"Basiado"</div>
               <div class="pc-pos">Atacante</div>
               <div class="pc-note">Primeiro Craque do Mês da história do grupo. Título histórico inédito.</div>
             </div>
             <div class="player-card">
               <div class="pc-name">Paulo Roberto</div>
-              <div class="pc-alias">—</div>
+              <div class="pc-alias">Sagan</div>
               <div class="pc-pos">Meia/Atacante</div>
               <div class="pc-note">Craque do Mês de Fevereiro. Primeiro campeão com gols e assistências contando.</div>
             </div>
@@ -1137,7 +1154,7 @@
             </div>
             <div class="player-card">
               <div class="pc-name">Matheus Marques</div>
-              <div class="pc-alias">—</div>
+              <div class="pc-alias">Muriçoca</div>
               <div class="pc-pos">Designer</div>
               <div class="pc-note">Criou o prêmio visual "Craque do Jogo" e a identidade gráfica do grupo.</div>
             </div>
@@ -1188,7 +1205,7 @@
               <div class="callout-value" id="callout-avg-match-length">—</div>
               <div class="callout-sub" id="callout-avg-matches-count">—</div>
             </div>
-            <div class="callout-card callout-danger">
+            <div class="callout-card">
               <div class="callout-label">🧊 Pé Frio</div>
               <div class="callout-value" id="callout-pe-frio-name">—</div>
               <div class="callout-sub" id="callout-pe-frio-rate">win rate</div>
@@ -1295,12 +1312,7 @@
           </div>
 
           <!-- ── 5.5 GOLS CONTRA ───────────────────────── -->
-          <h3 id="stat-contra" style="margin:1.2rem 0 .4rem; font-size:1rem;">😬 Friendly Fire — Gols Contra</h3>
-          <div class="notice" style="margin-bottom:.5rem;">
-            <span class="icon">😬</span>
-            <span>Esta tabela documenta as contribuições involuntárias ao placar adversário. Ser listado aqui é uma
-              honra duvidosa.</span>
-          </div>
+          <h3 id="stat-contra" style="margin:1.2rem 0 .4rem; font-size:1rem;">📛 Gols Contra</h3>
           <div class="wiki-table-wrap">
             <table class="wiki-table" id="table-contra">
               <caption>Quadro de Gols Contra</caption>
@@ -1320,11 +1332,19 @@
           </div>
 
           <!-- ── 5.6 MÉDIA DE AVALIAÇÃO ────────────────── -->
-          <h3 id="stat-rating" style="margin:1.2rem 0 .4rem; font-size:1rem;">⭐ Média de Avaliação <small
+          <h3 id="stat-rating" style="margin:1.2rem 0 .4rem; font-size:1rem;">⭐ Média por Jogador <small
               style="font-weight:normal;font-size:.8em;color:var(--wiki-muted);">(mín. 3 partidas)</small></h3>
+          <div class="rule-box">
+            <h4>Como a nota é calculada:</h4>
+            <ul>
+              <li><strong>Resultado Coletivo:</strong> Vitória (+1.0), Empate (+0.5), Derrota (-0.75)</li>
+              <li><strong>Ações Ofensivas:</strong> Gol Marcado (+0.8), Assistência (+0.4)</li>
+              <li><strong>Ações Defensivas:</strong> Clean Sheet (+0.5), Gol Sofrido (-0.15), Gol Contra (-0.8)</li>
+            </ul>
+          </div>
           <div class="wiki-table-wrap">
             <table class="wiki-table" id="table-rating">
-              <caption>Nota média recebida por partida (escala 0–10)</caption>
+              <caption>Nota média recebida por jogador (escala 0–10)</caption>
               <thead>
                 <tr>
                   <th class="rank">#</th>
@@ -1345,7 +1365,7 @@
           <h3 id="stat-winrate" style="margin:1.2rem 0 .4rem; font-size:1rem;">🏅 Taxa de Vitórias</h3>
           <div class="wiki-table-wrap">
             <table class="wiki-table" id="table-winrate">
-              <caption>Porcentagem de vitórias por jogador (mín. 3 partidas)</caption>
+              <caption>Porcentagem de vitórias por jogador (mín. 10 partidas)</caption>
               <thead>
                 <tr>
                   <th class="rank">#</th>
@@ -1358,6 +1378,29 @@
               <tbody>
                 <tr>
                   <td colspan="5" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── APROVEITAMENTO ──────────────────────────── -->
+          <h3 id="stat-aproveitamento" style="margin:1.2rem 0 .4rem; font-size:1rem;">📈 Aproveitamento</h3>
+          <div class="wiki-table-wrap">
+            <table class="wiki-table" id="table-aproveitamento">
+              <caption>Aproveitamento de pontos conquistados (Vitória=3, Empate=1) (mín. 10 partidas)</caption>
+              <thead>
+                <tr>
+                  <th class="rank">#</th>
+                  <th>Jogador</th>
+                  <th class="num">Aproveitamento</th>
+                  <th class="num">Vitórias</th>
+                  <th class="num">Empates</th>
+                  <th class="num">Derrotas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="6" class="num" style="color:var(--wiki-muted);font-style:italic;">Carregando…</td>
                 </tr>
               </tbody>
             </table>
@@ -1388,12 +1431,12 @@
           <h3 id="stat-duos" style="margin:1.2rem 0 .4rem; font-size:1rem;">🤝 Duplas Mortais</h3>
           <div class="wiki-table-wrap">
             <table class="wiki-table" id="table-duos">
-              <caption>Pares assistente → goleador mais frequentes</caption>
+              <caption>Duplas com mais gols em parceria</caption>
               <thead>
                 <tr>
                   <th class="rank">#</th>
-                  <th>Assistente</th>
-                  <th>Goleador</th>
+                  <th>Jogador 1</th>
+                  <th>Jogador 2</th>
                   <th class="num">Gols em Parceria</th>
                 </tr>
               </thead>
@@ -1498,6 +1541,7 @@
                   <th class="num" data-sort="sort-goals">Gols</th>
                   <th class="num" data-sort="sort-assists">Assists</th>
                   <th class="num" data-sort="sort-ga">G+A ▼</th>
+                  <th class="num" data-sort="sort-gapergame">(G+A)/Jogo</th>
                   <th class="num" data-sort="sort-yellow">
                     <span class="card card-yellow" style="margin-right:2px;"></span>Amarelos
                   </th>
@@ -1849,11 +1893,11 @@
   </script>
 
   <!-- Stats engine: must load after the DOM tables are present -->
-  <script src="stats.js"></script>
+  <script src="js/stats.js"></script>
   <!-- All-Time Player Stats engine -->
-  <script src="all_time_stats.js"></script>
+  <script src=" js/all_time_stats.js"></script>
   <!-- Craque do Mês engine -->
-  <script src="craque_do_mes.js"></script>
+  <script src="js/craque_do_mes.js"></script>
 </body>
 
 </html>

@@ -30,16 +30,23 @@ All statistics on the page are **calculated dynamically at page load** — just 
 
 ```
 WikiFut/
-├── index.html              # Main page — all layout, CSS, and section HTML
-├── stats.js                # Statistics engine (12 stat categories)
-├── craque_do_mes.js        # Player of the Month engine + sidebar infobox
-├── all_time_stats.js       # All-Time player stats table engine
-├── data.json               # Match data exported from the App do Fut
-├── assets/
-│   ├── logo/               # Group logo (logo.jpeg)
-│   ├── players_icons/      # Player icon images (referenced in data.json)
-│   └── craques_do_mes/     # Monthly winner photos (MM_YYYY.jpeg)
-└── TODO.md                 # Open tasks
+│
+├── index.html            
+├── README.md             
+├── TODO.md               
+│
+├── js/                  
+│   ├── firebase_setup.js 
+│   ├── stats.js
+│   ├── all_time_stats.js
+│   └── craque_do_mes.js
+│
+└── assets/               
+    ├── players_icons/
+    ├── logo/
+    ├── others/
+    └── craques_do_mes/
+
 ```
 
 ---

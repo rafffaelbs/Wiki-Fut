@@ -97,12 +97,14 @@ const MONTH_NAMES_PT = [
  * Returns { month: 1-12, year: YYYY } or null.
  */
 function parseSessionDate(session) {
-  // Prefer the explicit "date" field "DD/MM/YYYY"
-  if (session.date && /^\d{2}\/\d{2}\/\d{4}$/.test(session.date)) {
-    const [, mm, yyyy] = session.date.split('/').map(Number);
-    return { month: mm, year: yyyy };
+  if (session.date) {
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(session.date)) {
+      const [, mm, yyyy] = session.date.split('/').map(Number);
+      return { month: mm, year: yyyy };
+    }
+    const d = new Date(session.date);
+    if (!isNaN(d)) return { month: d.getMonth() + 1, year: d.getFullYear() };
   }
-  // Fall back to ISO timestamp
   if (session.timestamp) {
     const d = new Date(session.timestamp);
     if (!isNaN(d)) return { month: d.getMonth() + 1, year: d.getFullYear() };
@@ -130,8 +132,16 @@ function imagePathForMonth(month, year) {
 function groupByMonth(data) {
   const months = new Map();
 
-  for (const session of data.sessions_data ?? []) {
-    const dateInfo = parseSessionDate(session);
+  for (const [dataKey, value] of Object.entries(data)) {
+    if (!dataKey.startsWith('match_history_')) continue;
+    let history = [];
+    try {
+      history = JSON.parse(value);
+    } catch (e) {
+      continue;
+    }
+    if (history.length === 0) continue;
+    const dateInfo = parseSessionDate(history[0]);
     if (!dateInfo) continue;
 
     const { month, year } = dateInfo;
@@ -143,7 +153,7 @@ function groupByMonth(data) {
 
     const monthData = months.get(key);
 
-    for (const match of session.history ?? []) {
+    for (const match of history) {
       for (const ev of match.events ?? []) {
         if (ev.type === 'goal' && ev.player) {
           const p = getOrCreatePlayer(monthData.players, ev.player);
@@ -537,10 +547,18 @@ function injectCraqueDoMesStyles() {
  * Searches all matches in the most-recent month's sessions for a matching player entry.
  */
 function findPlayerIcon(data, playerName, month, year) {
-  for (const session of data.sessions_data ?? []) {
-    const dateInfo = parseSessionDate(session);
+  for (const [key, value] of Object.entries(data)) {
+    if (!key.startsWith('match_history_')) continue;
+    let history = [];
+    try {
+      history = JSON.parse(value);
+    } catch (e) {
+      continue;
+    }
+    if (history.length === 0) continue;
+    const dateInfo = parseSessionDate(history[0]);
     if (!dateInfo || dateInfo.month !== month || dateInfo.year !== year) continue;
-    for (const match of session.history ?? []) {
+    for (const match of history) {
       for (const side of ['red', 'white']) {
         const found = (match.players?.[side] ?? []).find(p => p.name === playerName);
         if (found?.icon) return found.icon;
@@ -726,9 +744,8 @@ function injectCraqueDoMes(data) {
  */
 async function loadCraqueDoMes() {
   try {
-    const res = await fetch('data.json', { cache: 'no-store' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
+    const { fetchFutData } = await import('./firebase_setup.js');
+    const data = await fetchFutData();
     injectCraqueDoMes(data);
   } catch (err) {
     console.error('[CraqueDoMes] Erro ao carregar data.json:', err);

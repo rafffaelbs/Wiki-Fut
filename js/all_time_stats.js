@@ -18,9 +18,8 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    const res = await fetch('data.json', { cache: 'no-store' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
+    const { fetchFutData } = await import('./firebase_setup.js');
+    const data = await fetchFutData();
     initAllTimeStats(data);
   } catch (err) {
     console.error('[AllTimeStats] Failed to load data.json:', err);
@@ -58,8 +57,16 @@ function aggregatePlayers(data) {
     return map.get(name);
   }
 
-  for (const session of data.sessions_data ?? []) {
-    for (const match of session.history ?? []) {
+  for (const [key, value] of Object.entries(data)) {
+    if (!key.startsWith('match_history_')) continue;
+    let history = [];
+    try {
+      history = JSON.parse(value);
+    } catch (e) {
+      console.error('Failed to parse history for', key, e);
+      continue;
+    }
+    for (const match of history) {
 
       // ── Matches Played ──────────────────────────────────────
       const sides = [
@@ -95,6 +102,7 @@ function aggregatePlayers(data) {
   return Array.from(map.values()).map(p => ({
     ...p,
     ga: p.goals + p.assists,
+    gaPerMatch: p.matches > 0 ? ((p.goals + p.assists) / p.matches) : 0,
   }));
 }
 
@@ -107,6 +115,7 @@ const SORT_FN = {
   'sort-goals': p => p.goals,
   'sort-assists': p => p.assists,
   'sort-ga': p => p.ga,
+  'sort-gapergame': p => p.gaPerMatch,
   'sort-yellow': p => p.yellowCards,
   'sort-red': p => p.redCards,
 };
@@ -173,6 +182,7 @@ function renderBody(players, tbody) {
         <td class="num">${p.goals}</td>
         <td class="num">${p.assists}</td>
         <td class="num"><strong>${p.ga}</strong></td>
+        <td class="num">${p.gaPerMatch.toFixed(2)}</td>
         <td class="num">${yellow}</td>
         <td class="num">${red}</td>
       </tr>`;
