@@ -1,14 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyChwoIRuQTTOHeZXEQwodi3gHCx9K-isxw",
-  authDomain: "app-do-fut.firebaseapp.com",
-  projectId: "app-do-fut",
-  storageBucket: "app-do-fut.firebasestorage.app",
-  messagingSenderId: "240906268187",
-  appId: "1:240906268187:web:d47065247d6f9bb93f12be"
-};
+import { firebaseConfig, targetGroupId, syncDocId } from './config.js';
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -18,14 +10,13 @@ let fetchPromise = null;
 export function fetchFutData() {
   if (!fetchPromise) {
     fetchPromise = (async () => {
-      const docRef = doc(db, "sync_data", "SNC7336");
+      const docRef = doc(db, "sync_data", syncDocId);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const root = docSnap.data();
         const rawData = root.data;
         if (!rawData) throw new Error("O formato dos dados no Firestore é inválido.");
 
-        const targetGroupId = "grupo_1773427387405";
         const sessionsKey = `sessions_${targetGroupId}`;
         const filteredData = {};
 
